@@ -1,13 +1,13 @@
-import {ClientMsgType, ServerMsgType} from "./types";
+import { Role } from "./types";
 
-export interface IClientMessage {
-    type: ClientMsgType;
-    clientId?: string;
-    //TODO Anpassen für andere MEssages
+export interface IRegisterMessage {
+  type: "REGISTER";
+  clientId: string;
+  name: string;
+  role: Role;
 }
 
-export interface IServerMessage {
-    type: ServerMsgType;
-    msg?: string;
-    //TODO Anpassen für andere MEssages
+export interface ISubmitAnswerMessage {
+  type: "SUBMIT_ANSWER";
+  payload: { answer: number };
 }

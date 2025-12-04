@@ -1,3 +1,1 @@
-export type ClientMsgType = "REGISTER" | "PING";
-
-export type ServerMsgType = "REGISTERED" | "PONG";
+export type Role = "player" | "observer";

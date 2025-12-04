@@ -1,8 +1,10 @@
+import WebSocket from 'ws';
+
 export type Operator = "+" | "-" | "*";
-export type Role = "player" | "observer" | "admin";
+export type Role = "player" | "observer";
 export type ClientId = string;
 
-// Client Events (Business Events)
+// Client Events
 export interface IRegisterEvent {
   type: "REGISTER";
   clientId: ClientId;
@@ -12,14 +14,12 @@ export interface IRegisterEvent {
 
 export interface ISubmitAnswerEvent {
   type: "SUBMIT_ANSWER";
-  payload: {
-    answer: number;
-  };
+  payload: { answer: number };
 }
 
 export type ClientMessage = IRegisterEvent | ISubmitAnswerEvent;
 
-// Server Events (Transport Events)
+// Server Events
 export interface IRegisteredEvent {
   type: "REGISTERED";
   message: string;
@@ -59,7 +59,7 @@ export interface IGameState {
   } | null;
 }
 
-// WebSocket with additional type safety
+// WebSocket with heartbeat tracking
 export interface ExtendedWebSocket extends WebSocket {
   isAlive?: boolean;
 }
