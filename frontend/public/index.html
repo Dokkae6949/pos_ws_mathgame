@@ -359,7 +359,6 @@
                 <select id="playerRole">
                     <option value="player">Player</option>
                     <option value="observer">Observer</option>
-                    <option value="admin">Admin</option>
                 </select>
             </div>
             <div class="button-group">
@@ -420,10 +419,7 @@
             <div class="section-title">REST API Controls</div>
             <div class="button-group">
                 <button id="forceTaskBtn" class="button button-secondary" onclick="forceNewTask()" disabled>
-                    🔄 REST FORCE TASK
-                </button>
-                <button id="startGameBtn" class="button button-success" onclick="startGame()" disabled>
-                    🎮 START GAME
+                    🔄 FORCE NEW TASK
                 </button>
                 <button class="button button-secondary" onclick="getStatus()">
                     📊 GET STATUS
@@ -453,7 +449,7 @@
 
   // Generate unique client ID
   function generateClientId() {
-    return 'client_' + Math.random().toString(36).substr(2, 9);
+    return 'client_' + Math.random().toString(36).substring(2, 11);
   }
 
   // Add log entry
@@ -557,7 +553,6 @@
       document.getElementById('connectBtn').disabled = true;
       document.getElementById('disconnectBtn').disabled = false;
       document.getElementById('forceTaskBtn').disabled = false;
-      document.getElementById('startGameBtn').disabled = false;
       connectBtn.innerHTML = originalText;
 
       // Test REST API connection
@@ -631,7 +626,6 @@
       document.getElementById('forceTaskBtn').disabled = true;
       document.getElementById('submitBtn').disabled = true;
       document.getElementById('answerInput').disabled = true;
-      document.getElementById('startGameBtn').disabled = true;
       connectBtn.innerHTML = originalText;
 
       // Reset game state
@@ -822,44 +816,6 @@
     } finally {
       forceTaskBtn.innerHTML = originalText;
       forceTaskBtn.disabled = false;
-    }
-  }
-
-  // Start game via REST API
-  async function startGame() {
-    const startGameBtn = document.getElementById('startGameBtn');
-    const originalText = startGameBtn.innerHTML;
-    startGameBtn.innerHTML = '<span class="spinner"></span> Starting game...';
-    startGameBtn.disabled = true;
-
-    try {
-      addLog('Starting game via REST API...');
-      const response = await fetch(`${serverUrl}/api/start-game`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
-
-      const result = await response.json();
-      console.log('Start game result:', result);
-
-      if (result.success) {
-        addLog(`✓ ${result.message}`);
-      } else {
-        addLog(`✗ Failed: ${result.message || 'Unknown error'}`);
-      }
-    } catch (error) {
-      addLog(`✗ Error: ${error}`);
-      console.error('Start game error:', error);
-    } finally {
-      startGameBtn.innerHTML = originalText;
-      startGameBtn.disabled = false;
     }
   }
 
