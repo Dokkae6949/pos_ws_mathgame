@@ -21,7 +21,7 @@ export class GameStateManager {
     
     // Auto-start game when 2 players join
     if (players.length === 2) {
-      this.gameState.currentPlayer = players[Math.floor(Math.random() * 2)].clientId;
+      this.gameState.currentPlayer = players[Math.floor(Math.random() * players.length)].clientId;
     }
   }
 

@@ -4,6 +4,7 @@ import WebSocket, { WebSocketServer } from 'ws';
 import { GameStateManager } from './game-state';
 import {
   ClientMessage,
+  ServerMessage,
   IRegisterEvent,
   ISubmitAnswerEvent,
   IClientInfo,
@@ -178,7 +179,7 @@ export class MathDuellServer {
     }
   }
 
-  private broadcast(message: any): void {
+  private broadcast(message: ServerMessage | { type: string; [key: string]: any }): void {
     const msg = JSON.stringify(message);
     this.wss.clients.forEach(client => {
       if (client.readyState === WebSocket.OPEN) {
